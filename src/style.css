@@ -1,0 +1,27 @@
+.reveal .footer {
+  position: absolute;
+  bottom: 0.5em;
+  right: 0em;
+  font-size: 0.5em;
+}
+#footerlist .transparency {
+  opacity: 0.5;
+}
+#footerlist, #footerlist a {
+  color: white;
+}
+#footerlist img {
+  max-width: 13%;
+  vertical-align: -25%;
+}
+ul#footerlist {
+  list-style-type: none;
+  text-align: right;
+  padding: 0;
+  margin: 0;
+  float: right;
+}
+ul#footerlist li {
+  display: inline;
+  margin-right: 0.6em;
+}

@@ -12,6 +12,7 @@
     <!-- <link rel="stylesheet" href="src/reveal/css/theme/solarized.css" id="theme"> -->
     <link rel="stylesheet" href="src/reveal/css/theme/moon.css" id="theme">
 		<link rel="stylesheet" href="src/reveal/lib/css/zenburn.css">
+    <link rel="stylesheet" href="src/style.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -27,7 +28,6 @@
 		<![endif]-->
 	</head>
 	<body>
-
 		<div class="reveal">
 
 			<div class="slides">
@@ -36,10 +36,15 @@
           <h2>juice out of Drupal 8:</h2>
 					<h2><i>Cache Tags & Varnish</i></h2>
 					<p>
-						<small style="vertical-align: baseline">Niels van Mourik (<a href="https://acquia.com/" target="_blank">Acquia</a> — <a href="https://twitter.com/_nielsvm" target="_blank">@_nielsvm</a> — <a href="http://www.nielsvm.org/" target="_blank">nielsvm.org</a>)</small>
+						<!-- <small style="vertical-align: baseline">Niels van Mourik (<a href="https://acquia.com/" target="_blank">Acquia</a> — <a href="https://twitter.com/_nielsvm" target="_blank">@_nielsvm</a> — <a href="http://www.nielsvm.org/" target="_blank">nielsvm.org</a>)</small> -->
 					</p>
 				</section>
+        <section data-markdown><script type="text/template">
+          ## Page title
 
+          A paragraph with some text and a [link](http://hakim.se).
+
+        </script></section>
 				<section>
 					<p>And now… something even cooler!</p>
 				</section>
@@ -52,35 +57,18 @@
 					<p><a href="https://www.drupal.org/developing/api/8/cache">d.o/developing/api/8/cache</a> + <a href="https://www.drupal.org/developing/api/8/cache/tags">/tags</a> + <a href="https://www.drupal.org/developing/api/8/cache/contexts">/contexts</a> + <a href="https://www.drupal.org/developing/api/8/cache/max-age">/max-age</a></p>
 				</section>
 
+        <div class='footer'>
+          <ul id="footerlist">
+            <li class="transparency">Niels van Mourik</li>
+            <li class="transparency"><a href="https://twitter.com/_nielsvm" target="_blank">@_nielsvm</a></li>
+            <li class="transparency"><a href="http://www.nielsvm.org/" target="_blank">nielsvm.org</a></li>
+            <li><a href="http://www.acquia.com/" target="_blank"><img src="img/acquia-logo-think-ahead-white-tiny.svg" /></a></li>
+          </ul>
+        </div>
 			</div>
+      <script src="src/reveal/lib/js/head.min.js"></script>
+  		<script src="src/reveal/js/reveal.js" /></script>
+      <script src="src/configuration.js" /></script>
 		</div>
-
-		<script src="src/reveal/lib/js/head.min.js"></script>
-		<script src="src/reveal/js/reveal.js"></script>
-
-		<script>
-
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
-
-				transition: 'concave', // none/fade/slide/convex/concave/zoom
-
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: 'src/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'src/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'src/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'src/reveal/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'src/reveal/plugin/zoom-js/zoom.js', async: true },
-					{ src: 'src/reveal/plugin/notes/notes.js', async: true }
-				]
-			});
-
-		</script>
 	</body>
 </html>
