@@ -16,6 +16,9 @@ body {
   right: 0em;
   font-size: 0.5em;
 }
+#footerlist #time {
+  opacity: 0.5;
+}
 #footerlist .transparency {
   opacity: 0.5;
 }

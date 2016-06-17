@@ -80,6 +80,9 @@
           # _Works!_<!-- .element: class="fragment" -->
 
           ---
+          ![](img/acquia-purge-queuing-elb-support.png)
+
+          ---
           # _Well, kind of_
 
           ### _Just don't:_<!-- .element: class="fragment" -->
@@ -88,7 +91,74 @@
           * ### Have more than 1 domain name<!-- .element: class="fragment" -->
 
         </script></section>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
+          # Drupal 8
+          ### _caching rearchitected_
 
+          ---
+          ## Has a proper internal cache API
+          * Allows tagging of cache items.<!-- .element: class="fragment" -->
+          * Cache::invalidateTags(["tag"])<!-- .element: class="fragment" -->
+          * CacheTagsListenersInterface<!-- .element: class="fragment" -->
+
+          ---
+          ### Has a proper render API and pipeline
+          ![](img/render_pipeline.png)
+
+          ---
+          ### Has a proper render API and pipeline
+          ![](img/render_pipeline_graph.png)
+
+          ---
+          ### Has a proper render API and pipeline
+          * Each single item is described with tags.<!-- .element: class="fragment" -->
+          * Tags "bubble" up to all rendering parents.<!-- .element: class="fragment" -->
+          * These tags are stored in the cache API.<!-- .element: class="fragment" -->
+
+          ---
+          ### When content changes
+          * The content API's call ::invalidateTags().<!-- .element: class="fragment" -->
+          * The render and page caches are transparently invalidated.<!-- .element: class="fragment" -->
+
+          ---
+          # Result?
+
+          # Happy Drupal<!-- .element: class="fragment" -->
+        </script></section>
+
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
+          # Drupal 8
+          ### _The Purge module_
+
+          ---
+          # The Purge module
+          * Generic middleware for all external cache invalidation.<!-- .element: class="fragment" -->
+          * Plugin based architecture with clean and decoupled APIs.<!-- .element: class="fragment" -->
+          * Mandatory queuing enforces asynchronous processing.<!-- .element: class="fragment" -->
+
+          drupal.org/project/[**purge**](https://drupal.org/project/purge)
+
+          ---
+          # How Purge works
+          * Listens and queues.<!-- .element: class="fragment" -->
+          * Queue processing strategies configurable.<!-- .element: class="fragment" -->
+          * Pipeline: purge_purger_http, cloudflare, akamai <!-- .element: class="fragment" -->
+
+          drupal.org/project/[**purge**](https://drupal.org/project/purge)
+
+          ---
+          ## D8 + purge + varnish =
+
+          ![](img/happy_cdn.png)<!-- .element: class="fragment" -->
+
+          ---
+          # Acquia
+          * Runs thousands of varnishd instances.<!-- .element: class="fragment" -->
+          * In a massive operation to move to Varnish 4.<!-- .element: class="fragment" -->
+          * Expects full D8 purge support soon!<!-- .element: class="fragment" -->
+
+
+        </script></section>
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
           # That was it!
 
@@ -106,6 +176,7 @@
 
         <div class='footer'>
           <ul id="footerlist">
+            <li class="transparency"><span id="time"></span></li>
             <li class="transparency">Niels van Mourik</li>
             <li class="transparency"><a href="https://twitter.com/_nielsvm" target="_blank">@_nielsvm</a></li>
             <li class="transparency"><a href="http://www.nielsvm.org/" target="_blank">nielsvm.org</a></li>
@@ -116,6 +187,11 @@
       <script src="src/reveal/lib/js/head.min.js"></script>
   		<script src="src/reveal/js/reveal.js" /></script>
       <script src="src/configuration.js" /></script>
+      <script src="src/stopwatch.js" /></script>
+      	<script><!-- Printing and PDF exports -->
+          show();
+          start();
+  		</script>
 		</div>
 	</body>
 </html>
