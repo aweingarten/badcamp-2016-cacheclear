@@ -1,3 +1,15 @@
+body {
+  background-color: #000000;
+}
+.reveal {
+  color: #FFFFFF;
+}
+.reveal a {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+/* Footer styling */
 .reveal .footer {
   position: absolute;
   bottom: 0.5em;
@@ -9,6 +21,7 @@
 }
 #footerlist, #footerlist a {
   color: white;
+  text-decoration: none;
 }
 #footerlist img {
   max-width: 13%;
