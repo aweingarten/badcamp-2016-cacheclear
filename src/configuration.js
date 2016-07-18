@@ -5,8 +5,8 @@ Reveal.initialize({
   progress: true,
   history: true,
   center: true,
-
   transition: 'convex', // none/fade/slide/convex/concave/zoom
+  transitionSpeed: 'fast', // default/fast/slow
 
   // Optional reveal.js plugins
   dependencies: [
