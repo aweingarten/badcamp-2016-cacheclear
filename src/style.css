@@ -9,6 +9,13 @@ body {
   text-decoration: underline;
 }
 
+/* Getting rid of image borders */
+.reveal section img {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
 /* Footer styling */
 .reveal .footer {
   position: absolute;
