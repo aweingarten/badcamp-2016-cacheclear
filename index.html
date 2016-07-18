@@ -53,26 +53,31 @@
 
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
           # Caching in D7
-          ### _a short introduction_
+          ### _bandaid at work_
 
           ---
-          ## Has URL-based page caching
+          ## Internal page cache
+
+          **URL-based cache full of HTML blobs.**<!-- .element: class="fragment" -->
 
           **Which empties the entire page cache...**<!-- .element: class="fragment" -->
 
           **for EVERY edited piece of content!**<!-- .element: class="fragment" -->
 
-          # YES, SERIOUSLY :/<!-- .element: class="fragment" -->
+          # YES, SERIOUSLY!&nbsp; :/<!-- .element: class="fragment" -->
+
+          ---
+          ![](img/kernelpanic.png)
+
+          ---
+          ## So Drupal 7 knows how
+          ## to cache its pages
+          ### but has no way of invalidating them!<!-- .element: class="fragment" -->
 
           ---
           ### 2009-2011
 
           Varnish wasn't widely used in the Drupalsphere.
-
-          ---
-          So it caches pages, but doesn't know how to invalidate them.
-
-          **efficiently :-(**<!-- .element: class="fragment" -->
 
           ---
           ## _D7 approaches to cache invalidation..._
