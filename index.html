@@ -40,20 +40,20 @@
           ---
           # Slide 1
 
-          **Foo.**<!-- .element: class="fragment" -->
+          **Foo**<!-- .element: class="fragment" -->
 
-          **Bar.**<!-- .element: class="fragment" -->
+          **Bar**<!-- .element: class="fragment" -->
 
-          **Baz (max three bullets if possible).**<!-- .element: class="fragment" -->
+          **Baz (max three bullets if possible)**<!-- .element: class="fragment" -->
 
           ---
           # Slide 2
 
-          **Foo.**<!-- .element: class="fragment" -->
+          **Foo**<!-- .element: class="fragment" -->
 
-          **Bar.**<!-- .element: class="fragment" -->
+          **Bar**<!-- .element: class="fragment" -->
 
-          **Baz (max three bullets if possible).**<!-- .element: class="fragment" -->
+          **Baz (max three bullets if possible)**<!-- .element: class="fragment" -->
         </script></section>
 
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
@@ -63,9 +63,9 @@
           ---
           ## Internal page cache
 
-          **URL-based registry that keeps full-HTML copies of pages.**<!-- .element: class="fragment" -->
+          **URL-based registry that keeps full-HTML copies of pages**<!-- .element: class="fragment" -->
 
-          **Considered a life-saver for anonymous traffic.**<!-- .element: class="fragment" -->
+          **Considered a life-saver for anonymous traffic**<!-- .element: class="fragment" -->
 
           **Except that... in real-life, it's far from effective :-(**<!-- .element: class="fragment" -->
 
@@ -108,11 +108,11 @@
           ## The _``expire``_ module
           ###### _Formally known as "Cache Expiration"_
 
-          **Fires off a hook - with a list of URLs - when content changes.**<!-- .element: class="fragment" -->
+          **Fires off a hook - with a list of URLs - when content changes**<!-- .element: class="fragment" -->
 
           **Then modules like ``varnish`` or ``acquia_purge`` invalidate...**<!-- .element: class="fragment" -->
 
-          **Detects basics, like ``node_save()`` and taxonomy terms.**<!-- .element: class="fragment" -->
+          **Detects basics, like ``node_save()`` and taxonomy terms**<!-- .element: class="fragment" -->
 
           ### <ins>This allows invalidating only what changed,<br /> keeping old content cached virtually endlessly!</ins><!-- .element: class="fragment" -->
 
@@ -122,13 +122,13 @@
           ---
           ## The wonky downsides...
 
-          **Guesses up to 60% of changes, rules to "fill in the gaps".**<!-- .element: class="fragment" -->
+          **Guesses up to 60% of changes, rules to "fill in the gaps"**<!-- .element: class="fragment" -->
 
           **You've got 100 page view. Edited a node, view stays cached!**<!-- .element: class="fragment" -->
 
-          **Too many incompatible modules that don't play along well.**<!-- .element: class="fragment" -->
+          **Too many incompatible modules that don't play along well**<!-- .element: class="fragment" -->
 
-          **_fire and forget_: overwhelming as URLs are uniquely cached.**<!-- .element: class="fragment" -->
+          **_fire and forget_: overwhelming as URLs are uniquely cached**<!-- .element: class="fragment" -->
 
           ---
           ### _(imagine British accent)_
@@ -191,22 +191,22 @@
           ---
           # The Purge module
 
-          **Generic middleware for all external cache invalidation.**<!-- .element: class="fragment" -->
+          **Generic middleware for all external cache invalidation**<!-- .element: class="fragment" -->
 
-          **Plugin based architecture with clean and decoupled APIs.**<!-- .element: class="fragment" -->
+          **Plugin based architecture with clean and decoupled APIs**<!-- .element: class="fragment" -->
 
-          **Mandatory queuing enforces asynchronous processing.**<!-- .element: class="fragment" -->
+          **Mandatory queuing enforces asynchronous processing**<!-- .element: class="fragment" -->
 
           drupal.org/project/[**purge**](https://drupal.org/project/purge)
 
           ---
           # How Purge works
 
-          **Listens and queues.**<!-- .element: class="fragment" -->
+          **Listens and queues**<!-- .element: class="fragment" -->
 
-          **Queue processing strategies configurable.**<!-- .element: class="fragment" -->
+          **Queue processing strategies configurable**<!-- .element: class="fragment" -->
 
-          **Pipeline: purge_purger_http, cloudflare, akamai.**<!-- .element: class="fragment" -->
+          **Pipeline: purge_purger_http, cloudflare, akamai**<!-- .element: class="fragment" -->
 
           drupal.org/project/[**purge**](https://drupal.org/project/purge)
 
@@ -218,9 +218,9 @@
           ---
           # Acquia
 
-          **Runs thousands of varnishd instances.**<!-- .element: class="fragment" -->
+          **Runs thousands of varnishd instances**<!-- .element: class="fragment" -->
 
-          **In a massive operation to move to Varnish 4.**<!-- .element: class="fragment" -->
+          **In a massive operation to move to Varnish 4**<!-- .element: class="fragment" -->
 
           **Expects full D8 purge support soon!**<!-- .element: class="fragment" -->
 
@@ -232,20 +232,20 @@
           ---
           # Slide 1
 
-          **Foo.**<!-- .element: class="fragment" -->
+          **Foo**<!-- .element: class="fragment" -->
 
-          **Bar.**<!-- .element: class="fragment" -->
+          **Bar**<!-- .element: class="fragment" -->
 
           **Baz (max three bullets if possible).**<!-- .element: class="fragment" -->
 
           ---
           # Slide 2
 
-          **Foo.**<!-- .element: class="fragment" -->
+          **Foo**<!-- .element: class="fragment" -->
 
-          **Bar.**<!-- .element: class="fragment" -->
+          **Bar**<!-- .element: class="fragment" -->
 
-          **Baz (max three bullets if possible).**<!-- .element: class="fragment" -->
+          **Baz (max three bullets if possible)**<!-- .element: class="fragment" -->
 
         </script></section>
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
