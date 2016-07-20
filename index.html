@@ -52,70 +52,83 @@
         </script></section>
 
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
-          # Caching in D7
+          # External Caching in D7
           ### _bandaid at work_
 
           ---
           ## Internal page cache
 
-          **URL-based cache full of HTML blobs.**<!-- .element: class="fragment" -->
+          **URL-based registry that keeps full-HTML copies of pages.**<!-- .element: class="fragment" -->
 
-          **Which empties the entire page cache...**<!-- .element: class="fragment" -->
+          **Considered a life-saver for anonymous traffic.**<!-- .element: class="fragment" -->
 
-          **for EVERY edited piece of content!**<!-- .element: class="fragment" -->
-
-          # YES, SERIOUSLY!&nbsp; :/<!-- .element: class="fragment" -->
+          **Except that... in real-life, it's far from effective :-(**<!-- .element: class="fragment" -->
 
           ---
-          ![](img/kernelpanic.png)
+          # _Editing just one node..._<!-- .element: class="fragment" -->
+          # _<ins>Deletes ALL other cached pages!</ins>_<!-- .element: class="fragment" -->
 
           ---
-          ## So Drupal 7 knows how
-          ## to cache its pages
-          ### but has no way of invalidating them!<!-- .element: class="fragment" -->
+          ## Now what if a CDN or
+          ## something like Varnish would cache
+          ## and serve Drupal's content?
 
           ---
-          ### 2009-2011
-
-          Varnish wasn't widely used in the Drupalsphere.
-
-          ---
-          ## _D7 approaches to cache invalidation..._
+          ### _(imagine British accent)_
+          # Splendid...<!-- .element: class="fragment" -->
+          # Thinking<!-- .element: class="fragment" -->
+          # Mate!<!-- .element: class="fragment" -->
 
           ---
-          ``Cache-Control = public, max-age=300``
+          ## We just need this in settings.php:<!-- .element: class="fragment" -->
 
-          ### _Works great_<!-- .element: class="fragment" -->
-          ## _for 5 minutes_<!-- .element: class="fragment" -->
-          # _then the DDOS strikes_<!-- .element: class="fragment" -->
+          ```
+          $conf['page_cache_maximum_age'] = 31536000;
+          ```<!-- .element: class="fragment" -->
 
-          ---
-          ###...and too many D7 sites still run this #@%%!
+          ** The external layer will cache everything for a whole year!  **<!-- .element: class="fragment" -->
 
-          # ``BOOO!!!!111``<!-- .element: class="fragment" -->
-
-          ---
-          ``Cache-Control = public, max-age=31536000``
-          # +
-          ## drupal.org/project/[**expire**](https://drupal.org/project/expire)
-          ## drupal.org/project/[**varnish**](https://drupal.org/project/varnish)
+          # Problem solved?<!-- .element: class="fragment" -->
 
           ---
-          ### _Guesses up to 60% of all changed URLs_
-          ## _then bombards ``  varnishd  `` with ``  PURGE  `` calls_<!-- .element: class="fragment" -->
-          # _Works!_<!-- .element: class="fragment" -->
+          ## Absolutely fabulous performance
+
+          **Until you edit a page...**<!-- .element: class="fragment" -->
+
+          **...and have it stuck in cache for the rest of the year!**<!-- .element: class="fragment" -->
+
+          # Blimey, Sherlock!<!-- .element: class="fragment" -->
+
+          ---
+          ## The _``expire``_ module
+          ###### _Formally known as "Cache Expiration"_
+
+          **Fires off a hook - with a list of URLs - when content changes.**<!-- .element: class="fragment" -->
+
+          **Then modules like ``varnish`` or ``acquia_purge`` invalidate...**<!-- .element: class="fragment" -->
+
+          **Detects basics, like ``node_save()`` and taxonomy terms.**<!-- .element: class="fragment" -->
+
+          ### <ins>This allows invalidating only what changed,<br /> keeping old content cached virtually endlessly!</ins><!-- .element: class="fragment" -->
 
           ---
           ![](img/acquia-purge-queuing-elb-support.png)
 
           ---
-          # _Well, kind of_
+          ## The wonky downsides...
 
-          ### _Just don't:_<!-- .element: class="fragment" -->
-          * ### Customize Drupal in any way<!-- .element: class="fragment" -->
-          * ### Add a CDN on top of Drupal<!-- .element: class="fragment" -->
-          * ### Have more than 1 domain name<!-- .element: class="fragment" -->
+          **Guesses up to 60% of changes, rules to "fill in the gaps".**<!-- .element: class="fragment" -->
 
+          **You've got 100 page view. Edited a node, view stays cached!**<!-- .element: class="fragment" -->
+
+          **Too many incompatible modules that don't play along well.**<!-- .element: class="fragment" -->
+
+          **_fire and forget_: overwhelming as URLs are uniquely cached.**<!-- .element: class="fragment" -->
+
+          ---
+          ### _(imagine British accent)_
+          ## but,...<!-- .element: class="fragment" -->
+          # Isn't that mad<br />as a bag of ferrets?<!-- .element: class="fragment" -->
         </script></section>
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
           # Enter D8: Tags
