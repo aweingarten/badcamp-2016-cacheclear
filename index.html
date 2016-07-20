@@ -146,12 +146,44 @@
 
           **Same old ``get()``, ``set()`` logic at heart!**<!-- .element: class="fragment" -->
 
-          ** Allows tagging of aribtrary cached items.**<!-- .element: class="fragment" -->
+          **Allows tagging of arbitrary cached items**<!-- .element: class="fragment" -->
 
-          ** Cache::invalidateTags(["tag"])**<!-- .element: class="fragment" -->
+          **``Cache::invalidateTags(["tag"])``**<!-- .element: class="fragment" -->
 
-          ** CacheTagsListenersInterface**<!-- .element: class="fragment" -->
+          **``CacheTagsListenersInterface``**<!-- .element: class="fragment" -->
 
+          ---
+          ## Render API... _entity cache done right!_
+          ![](img/render_pipeline.svg)
+
+          ---
+          ## All rendering, through _one_ system!
+          ![](img/render_pipeline_graph.png)
+
+          ---
+          **All themed item get cached, _"entitycache in core!"_**<!-- .element: class="fragment" -->
+
+          **Items are described with "_tags"_ like "``node:1``"**<!-- .element: class="fragment" -->
+
+          **Tags "bubble up" to all rendered parents, including pages!**<!-- .element: class="fragment" -->
+
+          ### Like sorting books by color in a shelve...<!-- .element: class="fragment" -->
+
+          ## <ins>Drupal mass-clears its caches by tag,<br />when items claiming that tag change!</ins><!-- .element: class="fragment" -->
+
+          ---
+          **_Switched to a different theme?_**<!-- .element: class="fragment" -->
+
+          **_Moving block 123 around?_**<!-- .element: class="fragment" -->
+
+          ** _Renamed term 15?_**<!-- .element: class="fragment" -->
+
+          ```
+          Cache::invalidateTags(["theme:mynewtheme"]);
+          Cache::invalidateTags(["block:123"]);
+          Cache::invalidateTags(["term:15"]);```<!-- .element: class="fragment" -->
+
+          ## <ins>Only clean the stain, not the entire table!</ins><!-- .element: class="fragment" -->
 
           ---
           ## Generating content became
@@ -159,31 +191,9 @@
           ## increased tremendously!
 
           ---
-          ### Has a proper render API and pipeline
-          ![](img/render_pipeline.png)
-
-          ---
-          ### Rendering visualized
-          ![](img/render_pipeline_graph.png)
-
-          ---
-          ** Each single item is described with tags.**<!-- .element: class="fragment" -->
-
-          ** Tags "bubble" up to all rendering parents.**<!-- .element: class="fragment" -->
-
-          ** These tags are stored in the cache API.**<!-- .element: class="fragment" -->
-
-          ---
-          ### When content changes
-
-          ** The content API's call ::invalidateTags().**<!-- .element: class="fragment" -->
-
-          ** The render and page caches are transparently invalidated.**<!-- .element: class="fragment" -->
-
-          ---
           # Result?
 
-          # Happy Drupal<!-- .element: class="fragment" -->
+          # A very happy Drupal<!-- .element: class="fragment" -->
         </script></section>
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
           # The _Purge_&nbsp; module
