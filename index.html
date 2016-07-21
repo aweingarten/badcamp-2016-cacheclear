@@ -58,7 +58,7 @@
 
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
           # Caching in D7
-          ### _bandaid at work_
+          ## _bandaid at work_
 
           ---
           ## Internal page cache
@@ -136,8 +136,8 @@
           # Isn't that mad<br />as a bag of ferrets?<!-- .element: class="fragment" -->
         </script></section>
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
-          # Enter Drupal 8
-          # _<ins>caching rearchitected</ins>_
+          # Caching in D8
+          ## _caching rearchitected_
 
           ---
           ## A proper generic cache API
@@ -159,7 +159,7 @@
           ![](img/render_pipeline_graph.png)
 
           ---
-          **All themed item get cached, _"entitycache in core!"_**<!-- .element: class="fragment" -->
+          **All themed items get cached, _"entitycache in core!"_**<!-- .element: class="fragment" -->
 
           **Items are described with "_tags"_ like "``node:1``"**<!-- .element: class="fragment" -->
 
@@ -194,34 +194,122 @@
           # A very happy Drupal<!-- .element: class="fragment" -->
         </script></section>
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
-          # The _Purge_&nbsp; module
+          # D8 + External caching
+          ## _The <ins>Purge</ins> module_
+          ##### drupal.org/project/[**purge**](https://drupal.org/project/purge)
 
           ---
-          # The Purge module
+          ## Leveraging D8
+
+          **``CacheTagsListenersInterface`` tells what changed**<!-- .element: class="fragment" -->
+
+          **Not hard to set response headers with tags**<!-- .element: class="fragment" -->
+
+          **Solution could be written < 100 lines!**<!-- .element: class="fragment" -->
+
+          ---
+          ## So why on earth
+          ## do I need the
+          ## purge module?
+
+          ---
+          # Good question!
+          ## Well, I've got a counter-question then...<!-- .element: class="fragment" -->
+
+          ---
+          ### Masochists, pay attention...<!-- .element: class="fragment" -->
+          # Who still hand-writes queries for a node listing?<!-- .element: class="fragment" -->
+
+          ---
+          ## What is Purge?
 
           **Generic middleware for all external cache invalidation**<!-- .element: class="fragment" -->
 
-          **Plugin based architecture with clean and decoupled APIs**<!-- .element: class="fragment" -->
+          **Plugin based architecture with clean/decoupled APIs**<!-- .element: class="fragment" -->
 
-          **Mandatory queuing enforces asynchronous processing**<!-- .element: class="fragment" -->
+          **Technology-agnostic (doesn't do anything by itself)**<!-- .element: class="fragment" -->
 
-          drupal.org/project/[**purge**](https://drupal.org/project/purge)
+          **It measures+throttles workload (=no crashing)**<!-- .element: class="fragment" -->
 
-          ---
-          # How Purge works
+          **It's for all types of external cache invalidation**<!-- .element: class="fragment" -->
 
-          **Listens and queues**<!-- .element: class="fragment" -->
+          **Drupal+Varnish+CDN? Piece of cake!**<!-- .element: class="fragment" -->
 
-          **Queue processing strategies configurable**<!-- .element: class="fragment" -->
-
-          **Pipeline: purge_purger_http, cloudflare, akamai**<!-- .element: class="fragment" -->
-
-          drupal.org/project/[**purge**](https://drupal.org/project/purge)
+          **Queue-based architecture**<!-- .element: class="fragment" -->
 
           ---
-          ## D8 + purge + varnish =
+          ## So why on earth
+          ## do I need the
+          ## purge module?
+
+          ---
+          # Because it helps
+          # Letting Drupal Fly
+          ### In a safe, stable and flexible manner!<!-- .element: class="fragment" -->
+
+          ---
+          ##### Unfortunately, its full of lets-make-me-look-wise
+          # Terminology
+
+          ---
+          ## <ins>Invalidation types</ins>
+          With D7+expire, **URL** was the only <ins>invalidation type</ins>. Purge allows support for **tags**,
+          **URL**s, full cache wipes and more advanced such as **domain** or **regex**.
+
+          ---
+          ## <ins>Invalidations</ins>
+          An <ins>invalidation</ins> is a single transaction object,
+          that tracks a cache removal from start-end. It can fail, succeed or
+          require multistep processing (e.g. with Akamai).
+
+          ---
+          ## <ins>Purgers</ins>
+          The hard work of removing an <ins>invalidation</ins> from a remote
+          server or CDN, is done by a <ins>purger</ins> plugin. These plugins
+          come from third-party modules such as ``cloudflare``.
+
+          ...or the bundled <ins>purge_purger_http</ins>.
+
+          ---
+          ## <ins>Queuers</ins> add to the <ins>Queue</ins>
+          By default, the tag <ins>queuer</ins> adds changed tags from core to
+          the <ins>queue</ins>. However, if your CDN doesn't support cache tags,
+          you could use other queuers such as the **URL** queuer.
+
+          -----
+
+          The <ins>Queue</ins> is normally backed by the **database** backend,
+          but can be replaced by different implementations, browsed and cleared.
+
+          ---
+          ## <ins>Processors</ins>
+          Your <ins>purgers</ins> execute the cache clearing, but when this
+          happens, is decided by <ins>processors</ins>. Usually **cron** and/or
+          **drush** are sufficient, but more strategies are possible...
+
+          Through AJAX anyone?
+
+          ---
+          ## Diagnostic checks
+          Last but not least, <ins>diagnostic checks</ins> exist to verify
+          whether its safe and possible to run, for instance by verifying your
+          CDN's API key or server settings.
+
+          ---
+          ## That's way
+          ## more than
+          ## 100 lines!
+
+          ---
+          ## D8 + purge + varnish + CF? =
 
           ![](img/happy_cdn.png)<!-- .element: class="fragment" -->
+
+          ## A very happy stack!<!-- .element: class="fragment" -->
+
+        </script></section>
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
+          # Implementations
 
           ---
           # Acquia
@@ -231,11 +319,6 @@
           **In a massive operation to move to Varnish 4**<!-- .element: class="fragment" -->
 
           **Expects full D8 purge support soon!**<!-- .element: class="fragment" -->
-
-
-        </script></section>
-        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
-          # Implementations
 
           ---
           # Slide 1
