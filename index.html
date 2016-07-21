@@ -36,24 +36,98 @@
 
           ---
           # Your webserver sucks!
+          **Lots of requests**<!-- .element: class="fragment" -->
+
+          **Building pages takes time**<!-- .element: class="fragment" -->
 
           ---
-          # Slide 1
-
-          **Foo**<!-- .element: class="fragment" -->
-
-          **Bar**<!-- .element: class="fragment" -->
-
-          **Baz (max three bullets if possible)**<!-- .element: class="fragment" -->
+          # Caching Everywhere! Which ones are we talking about?
 
           ---
-          # Slide 2
+          # Layers
+          ![](img/drupal-caching-architecture.png)
 
-          **Foo**<!-- .element: class="fragment" -->
+          ---
+          #  What is a Reverse Proxy?
+          **URL-based cache full of HTML blobs**<!-- .element: class="fragment" -->
 
-          **Bar**<!-- .element: class="fragment" -->
+          **Caches Outbound HTTP request**<!-- .element: class="fragment" -->
 
-          **Baz (max three bullets if possible)**<!-- .element: class="fragment" -->
+          **Follows the HTTP protocol / cache-control headers**<!-- .element: class="fragment" -->
+
+          ---
+          #  Now What is a CDN?
+
+          **Fancy Reverse Proxy** <!-- .element: class="fragment" -->
+
+          **Globally Distributed network of servers** <!-- .element: class="fragment" -->
+
+          **Serve users from the place closest to them** <!-- .element: class="fragment" -->
+
+          **Can protect against DDOS** <!-- .element: class="fragment" -->
+
+          ---
+          ##  How does this actually work?
+          ![](img/cdn-flow.png)
+
+          ---
+          # What does success look like?
+
+          ---
+          # Failure: Cache Miss
+          ```
+          curl -SLIXGET https://adam.weingarten.me/test
+          HTTP/1.1 200 OK
+          Content-Type: text/html; charset=UTF-8
+          Cache-Control: public, max-age=86400
+          Expires: Sat, 23 Jul 2016 12:19:47 GMT
+          Purge-Cache-Tags: block_view config:block.block.bartik_account_menu config:block.block.bartik_branding config:block.block.bartik_breadcrumbs config:block.block.bartik_content config:block.block.bartik_footer config:block.block.bartik_help config:block.block.bartik_local_actions config:block.block.bartik_local_tasks config:block.block.bartik_main_menu config:block.block.bartik_messages config:block.block.bartik_page_title config:block.block.bartik_powered config:block_list config:filter.format.rich_text config:system.menu.account config:system.menu.footer config:system.menu.main config:system.site config:user.role.anonymous node:1 node_type:page node_view page_manager_route_name:entity.node.canonical rendered user:0 user:1
+          Vary: Accept-Encoding
+          Via: 1.1 varnish
+          X-Cache: MISS
+          X-Drupal-Cache: MISS
+          X-Frame-Options: SAMEORIGIN
+          X-Generator: Drupal 8 (https://www.drupal.org)
+          X-UA-Compatible: IE=edge
+          X-Varnish: 1341461221
+          CF-Cache-Status: MISS
+          Server: cloudflare-nginx
+          CF-RAY: 2c66d7c869570f2d-IAD
+          ```
+
+          ---
+          # Success: Cache Hit
+          ```
+          curl -SLIXGET https://adam.weingarten.me/test
+          HTTP/1.1 200 OK
+          Content-Type: text/html; charset=UTF-8
+          Cache-Control: public, max-age=86400
+          Expires: Sat, 23 Jul 2016 12:19:47 GMT
+          Purge-Cache-Tags: block_view config:block.block.bartik_account_menu config:block.block.bartik_branding config:block.block.bartik_breadcrumbs config:block.block.bartik_content config:block.block.bartik_footer config:block.block.bartik_help config:block.block.bartik_local_actions config:block.block.bartik_local_tasks config:block.block.bartik_main_menu config:block.block.bartik_messages config:block.block.bartik_page_title config:block.block.bartik_powered config:block_list config:filter.format.rich_text config:system.menu.account config:system.menu.footer config:system.menu.main config:system.site config:user.role.anonymous node:1 node_type:page node_view page_manager_route_name:entity.node.canonical rendered user:0 user:1
+          Vary: Accept-Encoding
+          Via: 1.1 varnish
+          X-Cache: MISS
+          X-Drupal-Cache: MISS
+          X-Frame-Options: SAMEORIGIN
+          X-Generator: Drupal 8 (https://www.drupal.org)
+          X-UA-Compatible: IE=edge
+          X-Varnish: 1341461221
+          CF-Cache-Status: HIT
+          Server: cloudflare-nginx
+          CF-RAY: 2c66d7c869570f2d-IAD
+          ```
+
+          ---
+          ## Bringing it all together
+
+          **Want items to be cached in CDN**<!-- .element: class="fragment" -->
+
+          **Want to see cache hits**<!-- .element: class="fragment" -->
+
+          **Need to remove items from cache**<!-- .element: class="fragment" -->
+
+
+
         </script></section>
 
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
@@ -168,6 +242,23 @@
           ### Like sorting books by color in a shelve...<!-- .element: class="fragment" -->
 
           ## <ins>Drupal mass-clears its caches by tag,<br />when items claiming that tag change!</ins><!-- .element: class="fragment" -->
+
+          ---
+          ## Tags for an entire page
+          ```
+          block_view config:block.block.bartik_account_menu
+          config:block.block.bartik_branding config:block.block.bartik_breadcrumbs
+          config:block.block.bartik_content config:block.block.bartik_footer
+          config:block.block.bartik_help config:block.block.bartik_local_actions
+          config:block.block.bartik_local_tasks config:block.block.bartik_main_menu
+          config:block.block.bartik_messages config:block.block.bartik_page_title
+          config:block.block.bartik_powered config:block_list
+          config:filter.format.rich_text config:system.menu.account
+          config:system.menu.footer config:system.menu.main
+          config:system.site config:user.role.anonymous node:1
+          node_type:page node_view page_manager_route_name:entity.node.canonical
+          rendered user:0 user:1
+          ```
 
           ---
           **_Switched to a different theme?_**<!-- .element: class="fragment" -->
@@ -321,22 +412,47 @@
           **Expects full D8 purge support soon!**<!-- .element: class="fragment" -->
 
           ---
-          # Slide 1
+          ## CloudFlare - Beginnings
+          * Started as an independent project. <!-- .element: class="fragment" -->
 
-          **Foo**<!-- .element: class="fragment" -->
+          * Figured we could use each other's work. <!-- .element: class="fragment" -->
 
-          **Bar**<!-- .element: class="fragment" -->
-
-          **Baz (max three bullets if possible).**<!-- .element: class="fragment" -->
+          * Not lazy. Efficient! <!-- .element: class="fragment" -->
 
           ---
-          # Slide 2
+          ## CloudFlare the D8 plugin
+          * Focus on interacting to Cloudflare. Not purging!<!-- .element: class="fragment" -->
 
-          **Foo**<!-- .element: class="fragment" -->
+          * 238 lines of code to purge. <!-- .element: class="fragment" -->
 
-          **Bar**<!-- .element: class="fragment" -->
+          * 400 lines of diagnostics<!-- .element: class="fragment" -->
 
-          **Baz (max three bullets if possible)**<!-- .element: class="fragment" -->
+          ---
+          ### Diagnostics: Look before you crash and burn
+          ![](img/cloudflare-diagnostics.png)<!-- .element: class="fragment" -->
+
+          ---
+          ## Plugin: What does it look like
+          ![](img/cloudflare-plugins.png)<!-- .element: class="fragment" -->
+
+          ---
+          # CloudFlare D7 v D8
+          * Hooks v Plugins<!-- .element: class="fragment" -->
+
+          * Object Oriented<!-- .element: class="fragment" -->
+
+          * Test Coverage<!-- .element: class="fragment" -->
+
+          ---
+          # Limitations
+          * 2,000 purge API calls in every 24 hour period. <!-- .element: class="fragment" -->
+
+          * 30 Tags/call <!-- .element: class="fragment" -->
+
+          * Tag-based enterprise tier only. Remember that  <!-- .element: class="fragment" -->
+
+
+
 
         </script></section>
         <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n---$"><script type="text/template">
